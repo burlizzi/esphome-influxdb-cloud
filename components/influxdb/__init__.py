@@ -23,7 +23,8 @@ CONFIG_SCHEMA = cv.All(
         cv.Required(CONF_INFLUXDB_ORG): cv.string,
         cv.Required(CONF_INFLUXDB_BUCKET): cv.string,
         cv.Required(CONF_INFLUXDB_MEASUREMENT): cv.string,
-    }).extend(cv.COMPONENT_SCHEMA),
+    })
+    .extend(cv.polling_component_schema("60s")),
     cv.only_with_arduino,
     cv.only_on(['esp32', 'esp8266']),
 )
