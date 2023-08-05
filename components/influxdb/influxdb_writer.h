@@ -7,7 +7,7 @@
 
 namespace esphome {
     namespace influxdb {
-        class InfluxDBWriter : public Component {
+        class InfluxDBWriter : public PollingComponent {
             public:
                 InfluxDBWriter() {}
                 
@@ -21,6 +21,7 @@ namespace esphome {
                 void set_measurement(std::string measurement) { this->measurement = measurement; }
                 
                 void on_sensor_update(sensor::Sensor *obj, float state);
+                void update();
                 
             protected:
                 std::string url;

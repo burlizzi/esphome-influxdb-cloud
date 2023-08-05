@@ -39,14 +39,17 @@ namespace esphome {
         void InfluxDBWriter::on_sensor_update(sensor::Sensor *obj, float state) {
             if (isnan(state))
                 return;
-            
-            this->point->clearFields();
             this->point->addField(obj->get_object_id().c_str(), state,3);
+        }
+        void InfluxDBWriter::update() {
+            if (!this->point->hasFields())
+                return;
             disableLoopWDT();
             if (!this->client->writePoint(*this->point)) {
                 ESP_LOGE(TAG, "InfluxDB write failed: %s", this->client->getLastErrorMessage().c_str());
             }
             enableLoopWDT();
+            this->point->clearFields();
         }
     }
 }
