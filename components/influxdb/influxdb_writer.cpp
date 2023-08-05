@@ -41,11 +41,12 @@ namespace esphome {
                 return;
             
             this->point->clearFields();
-            this->point->addField(obj->get_object_id().c_str(), state);
-            
+            this->point->addField(obj->get_object_id().c_str(), state,3);
+            disableLoopWDT();
             if (!this->client->writePoint(*this->point)) {
                 ESP_LOGE(TAG, "InfluxDB write failed: %s", this->client->getLastErrorMessage().c_str());
             }
+            enableLoopWDT();
         }
     }
 }
