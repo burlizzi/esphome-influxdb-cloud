@@ -39,7 +39,7 @@ namespace esphome {
         void InfluxDBWriter::on_sensor_update(sensor::Sensor *obj, float state) {
             if (isnan(state))
                 return;
-            this->point->addField(obj->get_object_id().c_str(), state,3);
+            this->point->addField(obj->get_object_id().c_str(), state,obj->get_accuracy_decimals());
         }
         void InfluxDBWriter::update() {
             if (!this->point->hasFields())
